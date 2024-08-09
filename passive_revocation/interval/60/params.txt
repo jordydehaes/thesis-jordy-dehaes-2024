@@ -1,0 +1,15 @@
+**.RevocationAuthorityService.Pseudolifetime = 60s
+**.SelfRevocationAuthService.minRevocationInterval = 45s
+**.SelfRevocationAuthService.maxRevocationInterval = 85s
+**.RevocationAuthorityService.dropProbability = 0.4
+**.RevocationAuthorityService.delayProbability = 0.4
+**.RevocationAuthorityService.delayMean = 2.0s
+**.RevocationAuthorityService.delayStdDev = 0.5s
+
+Total Network Overhead: 3.55845e+06 bytes
+Mean revocation time: 25.92 seconds
+Median revocation time: 24.50 seconds
+Maximum revocation time: 58.92 seconds
+Total data transmitted: 3475.05 KB
+Average message size: 345.55 bytes
+Maximum message size: 488.00 bytes

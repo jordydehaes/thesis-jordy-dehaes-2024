@@ -1,0 +1,20 @@
+**.RevocationAuthorityService.crlGenInterval = 6s
+**.SelfRevocationAuthService.minRevocationInterval = 45s
+**.SelfRevocationAuthService.maxRevocationInterval = 85s
+**.RevocationAuthorityService.dropProbability = 0.4
+**.RevocationAuthorityService.delayProbability = 0.4
+**.RevocationAuthorityService.delayMean = 2.0s
+**.RevocationAuthorityService.delayStdDev = 0.5s
+
+=== Active Revocation Metrics ===
+Maximum CRL Size: 23 entries
+Total CRL Distribution Overhead: 221688 bytes
+Average CRL Message Size: 607.364 bytes
+================================
+
+Mean active revocation time: 4.49 seconds
+Median active revocation time: 3.12 seconds
+Maximum active revocation time: 23.80 seconds
+Total data transmitted: 216.49 KB
+Average CRL message size: 607.36 bytes
+Maximum CRL message size: 680.00 bytes

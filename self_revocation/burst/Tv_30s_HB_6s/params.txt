@@ -1,0 +1,17 @@
+**.SelfRevocationAuthService.validityWindow = 30s
+**.VehicleHBService.validityWindow = 30s
+**.SelfRevocationAuthService.heartbeatInterval = 6s
+**.SelfRevocationAuthService.minRevocationInterval = 45s
+**.SelfRevocationAuthService.maxRevocationInterval = 85s
+**.SelfRevocationAuthService.dropProbability = 0.4
+**.SelfRevocationAuthService.delayProbability = 0.4
+**.SelfRevocationAuthService.delayMean = 2.0s
+**.SelfRevocationAuthService.delayStdDev = 0.5s
+
+Mean revocation time: 2.80 seconds
+Median revocation time: 3.13 seconds
+Maximum revocation time: 3.48 seconds
+Theoretical upper bound (T_eff): 60.00 seconds
+Total data transmitted: 174.50 KB
+Average message size: 499.13 bytes
+Maximum message size: 608.00 bytes
