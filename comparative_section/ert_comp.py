@@ -1,47 +1,52 @@
-import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
+# Data
+categories = ['6s/6s/60s', '18s/18s/180s', '36s/36s/360s']
+self_rev_mean = [7.85, 19.83, 28.97]
+active_rev_mean = [10.65, 18.59, 46.38]
+passive_rev_mean = [25.92, 86.54, 165.31]
+self_rev_median = [6.87, 13.04, 25.46]
+active_rev_median = [8.78, 12.97, 30.94]
+passive_rev_median = [24.50, 85.64, 172.93]
+
+# Set up the plot style
 plt.style.use('seaborn-v0_8-paper')
 plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 10
 
-crl_6 = pd.read_csv('active_revocation/interval/6_crl/active_revocation_crl.csv')
-crl_18 = pd.read_csv('active_revocation/interval/18_crl/active_revocation_crl.csv')
-crl_36 = pd.read_csv('active_revocation/interval/36_crl/active_revocation_crl.csv')
+# Create the figure and axes
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-prl_6 = pd.read_csv('self_revocation/interval/Tv_30s_HB_6s/heartbeats.csv')
-prl_18 = pd.read_csv('self_revocation/interval/Tv_90s_HB_18s/heartbeats.csv')
-prl_36 = pd.read_csv('self_revocation/interval/Tv_180s_HB_36s/heartbeats.csv')
+# Function to create bars
+def create_bars(ax, data1, data2, data3, title):
+    x = np.arange(len(categories))
+    width = 0.25
+    
+    ax.bar(x - width, data1, width, label='Self-Revocation', color='#1f77b4')
+    ax.bar(x, data2, width, label='Active Revocation', color='#ff7f0e')
+    ax.bar(x + width, data3, width, label='Passive Revocation', color='#2ca02c')
+    
+    ax.set_ylabel('Revocation Time (s)')
+    ax.set_title(title)
+    ax.set_xticks(x)
+    ax.set_xticklabels(categories)
+    ax.legend()
+    
+    # Add value labels on top of each bar
+    for i, v in enumerate(data1):
+        ax.text(i - width, v, f'{v:.2f}', ha='center', va='bottom')
+    for i, v in enumerate(data2):
+        ax.text(i, v, f'{v:.2f}', ha='center', va='bottom')
+    for i, v in enumerate(data3):
+        ax.text(i + width, v, f'{v:.2f}', ha='center', va='bottom')
+    
+    # Add x-axis label
+    ax.set_xlabel('Parameter Set')
 
-crl_6 = crl_6.dropna(subset=['CRL Message Size'])
-crl_18 = crl_18.dropna(subset=['CRL Message Size'])
-crl_36 = crl_36.dropna(subset=['CRL Message Size'])
+# Create the bar plots
+create_bars(ax1, self_rev_mean, active_rev_mean, passive_rev_mean, '(a) Mean Effective Revocation Time')
+create_bars(ax2, self_rev_median, active_rev_median, passive_rev_median, '(b) Median Effective Revocation Time')
 
-crl_6['Simulation Time'] = crl_6['Simulation Time'].astype(float)
-crl_18['Simulation Time'] = crl_18['Simulation Time'].astype(float)
-crl_36['Simulation Time'] = crl_36['Simulation Time'].astype(float)
-
-plt.figure(figsize=(12, 8))
-
-plt.plot(crl_6['Simulation Time'], crl_6['CRL Message Size'], 
-         label='CRL Rate: 6s (Active)', linestyle='-', linewidth=2, color='#2ca02c')
-plt.plot(crl_18['Simulation Time'], crl_18['CRL Message Size'], 
-         label='CRL Rate: 18s (Active)', linestyle='-', linewidth=2, color='#2ca02c')
-plt.plot(crl_36['Simulation Time'], crl_36['CRL Message Size'], 
-         label='CRL Rate: 36s (Active)', linestyle='-', linewidth=2, color='#2ca02c')
-
-plt.plot(prl_6['Simulation Time'], prl_6['Message Size'], 
-         label='PRL Rate: HB 6s, Tv 30s (Self)', linestyle='--', linewidth=2, color='#1f77b4')
-plt.plot(prl_18['Simulation Time'], prl_18['Message Size'], 
-         label='PRL Rate: HB 18s, Tv 90s (Self)', linestyle='--', linewidth=2, color='#1f77b4')
-plt.plot(prl_36['Simulation Time'], prl_36['Message Size'], 
-         label='PRL Rate: HB 36s, Tv 180s (Self)', linestyle='--', linewidth=2, color='#1f77b4')
-
-plt.xlabel('Simulation Time (s)')
-plt.ylabel('Message Size (Bytes)')
-plt.title('CRL vs PRL Message Size Growth Over Time')
-plt.legend()
-
-#plt.savefig('crl_vs_prl_growth_comparison_styled.png', dpi=300, bbox_inches='tight')
-
+# Adjust layout and display
+plt.tight_layout()
 plt.show()
